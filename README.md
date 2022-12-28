@@ -66,7 +66,15 @@ mysqlclient==2.1.1
 
 ```sh
 docker-compose build
-docker-compose run web django-admin startproject test_app .
+docker-compose run web mkdir test_app
+docker-compose run web django-admin startproject conf test_app/
+docker-compose run -w /code/test_app web python manage.py startapp tenant_only
+docker-compose run -w /code/test_app web python manage.py startapp tenant_common
 sudo chown -R $USER:$USER .
 docker-compose up
 ```
+
+5. Setting djang_tenants
+
+Read
+[django_tenants Docs#Installation](https://django-tenants.readthedocs.io/en/latest/install.html)
