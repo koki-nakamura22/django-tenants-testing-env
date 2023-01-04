@@ -93,3 +93,10 @@ docker-compose up
 
 Read
 [django_tenants Docs#Installation](https://django-tenants.readthedocs.io/en/latest/install.html)
+
+
+## How to enter to a container
+
+```sh
+docker-compose exec web bash
+```

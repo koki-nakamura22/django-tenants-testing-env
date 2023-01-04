@@ -1,0 +1,28 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.158.0/containers/docker-existing-docker-compose
+// If you want to run as a non-root user in the container, see .devcontainer/docker-compose.yml.
+{
+  "name": "dev-container", // コンテナ表示名
+  "dockerComposeFile": [
+    "../docker-compose.yml" // Docker Composeのファイルパス
+  ],
+  "service": "python-test-tenants-app-with-docker", // Docker Composeの接続サービス名
+  "remoteUser": "dev-user", // デフォルトユーザをrootから切り替える
+  "workspaceFolder": "/code", // Workspaceのフォルダを指定
+  "extensions": [
+    // コンテナ内でインストールするVS Codeの拡張機能ID
+    "ms-python.python",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "kddejong.vscode-cfn-lint"
+  ],
+  "settings": {
+    // コンテナ内に追加するVS Codeの設定
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "editor.formatOnSave": true,
+    "python.linting.flake8Args": ["--max-line-length=150"],
+    "eslint.workingDirectories": [{ "mode": "auto" }],
+    "cfnLint.path": "/home/jmc-dev/.pyenv/shims/cfn-lint"
+  }
+}
