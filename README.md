@@ -29,7 +29,7 @@ services:
     build:
       context: .
       network: host
-    command: python3 manage.py runserver 0.0.0.0:8100
+    command: python3 test_app/manage.py runserver 0.0.0.0:8100
     working_dir: /code
     ports:
       - 8100:8100
@@ -39,19 +39,34 @@ services:
       - db
   db:
     container_name: python-test-tenants-app-with-docker-db
-    image: mysql:5.7
+    image: postgres:15.1
     restart: always
-    # TODO: Must export the database connection information
     environment:
-      MYSQL_DATABASE: testdb
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: db-user
-      MYSQL_PASSWORD: db-pass
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-    volumes:
-      - ./mysql:/var/lib/mysql
+      POSTGRES_USER: db-user
+      POSTGRES_PASSWORD: db-pass
+      PGPASSWORD: password123
+      POSTGRES_DB: sample
+      TZ: "Asia/Tokyo"
     ports:
-      - 13306:3306
+      - 5432:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - 81:80
+    environment:
+      PGADMIN_DEFAULT_EMAIL: info@mebee.info
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - db
+volumes:
+  postgres:
+  pgadmin:
+
 ```
 
 3. Create a requirements.txt then write the following lines.
